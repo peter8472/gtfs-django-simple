@@ -1,0 +1,3 @@
+
+select count(*) from stop_times inner  join stops using (stop_id) where trip_id in (select trip_id from trips where service_id = '1');
+
