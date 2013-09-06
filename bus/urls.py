@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^$', 'bus.views.index'),
     url(r'^cal$', 'bus.views.calendar'),
     url(r'^mytrip$', 'bus.views.mytrip'),
+    url(r'^map$', 'bus.views.map'),
     url(r'^(?P<pk>\d+)/results/$', DetailView.as_view(
 # does not work because detailview needs a pk or slug
 	model=Routes,

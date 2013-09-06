@@ -61,7 +61,7 @@ class FareAttributes(models.Model):
     currency_type = models.CharField(max_length=75, blank=True)
     payment_method = models.CharField(max_length=30, blank=True)
     transfers = models.CharField(max_length=30, blank=True)
-    transfer_duration = models.CharField(max_length=30, blank=True)
+    transfer_duration = models.CharField(max_length=30, blank=True, null=True)
     class Meta:
         db_table = u'fare_attributes'
 
@@ -113,7 +113,21 @@ class Shapes(models.Model):
     class Meta:
         db_table = u'shapes'
 
+class Trips(models.Model):
+    route_id = models.CharField(max_length=45, blank=True)
+    service_id = models.CharField(max_length=45, blank=True)
+    trip_id = models.CharField(primary_key=True,max_length=45, blank=True)
+    trip_short_name = models.CharField(max_length=150, blank=True)
+    trip_headsign = models.CharField(max_length=450, blank=True)
+    direction_id = models.IntegerField(null=True, blank=True)
+    block_id = models.CharField(max_length=48, blank=True)
+    shape_id = models.IntegerField(null=True, blank=True)
+    trip_bikes_allowed = models.CharField(max_length=150, blank=True)
+    class Meta:
+        db_table = u'trips'
+
 class StopTimes(models.Model):
+    trips = models.ForeignKey(Trips) # causes foreign key failure
     trip_id = models.CharField(max_length=45, blank=True)
     arrival_time = models.TextField(blank=True) # This field type is a guess.
     departure_time = models.TextField(blank=True) # This field type is a guess.
@@ -148,17 +162,4 @@ class Transfers(models.Model):
     min_transfer_time = models.IntegerField(null=True, blank=True)
     class Meta:
         db_table = u'transfers'
-
-class Trips(models.Model):
-    route_id = models.CharField(max_length=45, blank=True)
-    service_id = models.CharField(max_length=45, blank=True)
-    trip_id = models.CharField(max_length=45, blank=True)
-    trip_short_name = models.CharField(max_length=150, blank=True)
-    trip_headsign = models.CharField(max_length=450, blank=True)
-    direction_id = models.IntegerField(null=True, blank=True)
-    block_id = models.CharField(max_length=48, blank=True)
-    shape_id = models.IntegerField(null=True, blank=True)
-    trip_bikes_allowed = models.CharField(max_length=150, blank=True)
-    class Meta:
-        db_table = u'trips'
 
